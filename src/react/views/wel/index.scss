@@ -1,0 +1,43 @@
+.progress-box {
+  height: 10px;
+  width: 500px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.progress {
+  height: 100%;
+  width: 100%; // 初始值为100%，对其缩放
+  will-change: transform;   /* 通过will-change告知浏览器提前做好优化准备 */
+  background-color: red;
+  animation-timing-function: linear;
+  // animation: play 3s linear;
+}
+
+@keyframes play {
+  0% {
+    transform: translateX(-50%) scaleX(0);
+  }
+  to {
+    // width: 100%;
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+@keyframes replay { /* 通过transform来启用GPU加速，跳过重排重绘阶段 */
+  0% {
+    transform: translateX(-50%) scaleX(0);  /* 用 scaleX 来代替 width */
+  }
+  to {
+    // width: 100%;
+    transform: translateX(0) scaleX(1);
+  }
+}
+
+.progress.play {     /* 使animation动画启动 */
+  animation-play-state: running;
+}
+
+.progress.pause {    /* 使animation动画暂停 */
+  animation-play-state: paused;
+}
