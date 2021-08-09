@@ -37,7 +37,7 @@ const Home = () => {
   }
   return (
     <div>
-      <button onClick={ handleVideo }>{ isPlay ? '暂停' : '播放' }</button>
+      <button onClick={ handleVideo }>{ isPlay ? '暂停' : '播放1' }</button>
       <button onClick={ replay }>重播</button>
       <span>{ `播放次数为：${count}` }</span>
       <div className="progress-box">

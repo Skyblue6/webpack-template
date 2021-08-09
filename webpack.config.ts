@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 * 所以建议这两个插件在开发分析时使用，而在生产环境去掉
 */ 
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // 可视化查看打包模块内容
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // 可视化查看打包模块内容
 const smp = new SpeedMeasurePlugin()
 
 // 用于为模块提供中间缓存步骤
@@ -14,6 +14,8 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 
 // 多线程构建 第一次构建将花费正常时间。第二个版本将明显更快。适合用在开发模式development和生产模式production下
 const Happypack = require('happypack')
+
+const AutoDllPlugin = require('autodll-webpack-plugin')
 
 // 打包进度
 const WebpackBar = require('webpackbar')
@@ -26,6 +28,7 @@ const config = {
     main: './src/main.ts',
     'index': './src/pages/index/index.ts',
     'hello': './src/pages/hello/hello.ts',
+    'ts': './src/pages/ts/index.ts',
     'react': './src/react/index',
     'vue': './src/vue/index'
   },
@@ -122,6 +125,12 @@ const config = {
       chunks: ['hello']
     }),
     new HtmlWebpackPlugin({
+      title: 'ts',
+      template: './src/pages/ts/index.html',
+      filename: 'ts.html',
+      chunks: ['ts']
+    }),
+    new HtmlWebpackPlugin({
       title: 'react',
       template: './public/react/index.html',
       filename: 'react.html',
@@ -135,8 +144,16 @@ const config = {
     }),
     new WebpackBar(),
     new VueLoaderPlugin(),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new HardSourceWebpackPlugin(),
+    // new AutoDllPlugin({
+    //   inject: true, // 注入到html中
+    //   filename: '[name].js',
+    //   entry: [
+    //     'react',
+    //     'react-dom'
+    //   ]
+    // })
     // new Happypack({
     //   id: 'babel',
     //   // use: ['babel-loader']
@@ -150,4 +167,4 @@ const config = {
   ]
 }
 
-export default smp.wrap(config)
+export default config

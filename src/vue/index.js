@@ -1,4 +1,7 @@
 import { createApp } from 'vue'
-import Wel from './views/wel/index.vue'
+import App from './App.vue'
+import router from './router'
 
-createApp(Wel).mount('#vue')
+const app = createApp(App)
+app.use(router)
+app.mount('#vue')
